@@ -11,6 +11,27 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CustomerSerializer
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return render(request,'portfolio/home.html')
+        else:
+            form = SignUpForm()
+            return render(request, 'portfolio/signup.html', {'form': form})
+    else:
+        form = SignUpForm()
+        return render(request, 'portfolio/signup.html', {'form': form})
+
 
 
 @login_required
@@ -187,3 +208,49 @@ class CustomerList(APIView):
 
 
 # Create your views here.
+#mutual funds code
+@login_required
+def mutualfund_list(request):
+    mutualfunds = Mutualfund.objects.filter( purchased_date__lte=timezone.now())
+    return render(request, 'portfolio/mutualfund_list.html' , {'mutualfunds': mutualfunds})
+
+@ login_required
+def mutualfund_new(request):
+    if request.method == "POST" :
+        form = MutualfundForm(request.POST)
+        if form.is_valid():
+            mutualfund = form.save(commit=False)
+            mutualfund.created_date = timezone.now()
+            mutualfund.save()
+            mutualfunds = Mutualfund.objects.filter( purchased_date__lte=timezone.now())
+            return render(request, 'portfolio/mutualfund_list.html', {'mutualfunds': mutualfunds})
+    else :
+        form = MutualfundForm()
+        # print("Else")
+        return render(request, 'portfolio/mutualfund_new.html', { 'form': form})
+
+
+@ login_required
+def mutualfund_edit(request, pk):
+    mutualfund = get_object_or_404(Mutualfund, pk=pk)
+    if request.method == "POST":
+        form = MutualfundForm(request.POST, instance=mutualfund)
+        if form.is_valid():
+            mutualfund = form.save()
+            # investment.customer = investment.id
+            mutualfund.updated_date = timezone.now()
+            mutualfund.save()
+            mutualfunds = Mutualfund.objects.filter(purchased_date__lte=timezone.now())
+            return render(request, 'portfolio/mutualfund_list.html', {'mutualfunds': mutualfunds})
+    else:
+        # print("else")
+        form = MutualfundForm(instance=mutualfund)
+        return render(request, 'portfolio/mutualfund_edit.html', {'form': form})
+
+
+@ login_required
+def mutualfund_delete(request, pk):
+    mutualfund = get_object_or_404(Mutualfund, pk =pk)
+    mutualfund.delete()
+    mutualfunds = Mutualfund.objects.filter( purchased_date__lte=timezone.now())
+    return render(request, 'portfolio/mutualfund_list.html', { 'mutualfunds': mutualfunds})

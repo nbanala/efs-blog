@@ -1,9 +1,9 @@
 {% extends 'portfolio/base.html' %}
 
 {% block content %}
-    <h1 style="color: white">Edit Stock</h1>
-    <form method="POST" class="stock-form">{% csrf_token %}
-        <div style="color: crimson">
+    <h1 style="color: white">Edit Mutualfund</h1>
+    <form method="POST" class="mutualfund-form">{% csrf_token %}
+        <div style="color: crimson;">
         {{ form.as_p }}
         </div>
         <button type="submit" class="save btn btn-default">Update</button>

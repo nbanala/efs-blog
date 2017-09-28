@@ -12,12 +12,12 @@
     <body>
     <style>
         body {
-            background-color: beige;
+            background-color: b;
         }
     </style>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-1">
+            <div class="col-md-9 col-md-offset-1">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Welcome!</div>
                     <div class="panel-body">
@@ -46,7 +46,7 @@
                 <th colspan="3">Actions</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style="background-color: white">
             {% for customer in customers %}
                 <tr>
                     <td>{{ customer.cust_number }}</td>

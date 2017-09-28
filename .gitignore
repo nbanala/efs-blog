@@ -3,3 +3,9 @@ db.sqlite3
 myvenv
 __pycache__
 local_settings.py
+/portfolio/templates/portfolio/registration/password_reset_confirm.html
+.idea/inspectionProfiles/
+portfolio/.idea/inspectionProfiles/
+portfolio/templates/portfolio/registration/password_reset_confirm.html
+portfolio/templates/portfolio/registration/password_reset_done.html
+portfolio/templates/portfolio/signup.html

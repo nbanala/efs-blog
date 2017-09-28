@@ -25,11 +25,17 @@
             </tr>
         </table>
         </div>
+    <br>
 
 
-        <div class="col-md-12">
+
+        <div class="col-md-12 col-md-offset">
         <input type="submit" value="login"/>
         <input type="hidden" name="next" value="{{ next }}"/>
+            <a class="col-md-offset" href="/password_reset">   Forgot Password?</a>
+            <div class="col-md-pull-6">
+                <a class="btn btn-link" href="{% url 'portfolio:signup' %}">SignUp</a>
+            </div>
     </div>
     </form>
      </div>
