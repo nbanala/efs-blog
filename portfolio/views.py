@@ -27,10 +27,10 @@ def signup(request):
             return render(request,'portfolio/home.html')
         else:
             form = SignUpForm()
-            return render(request, 'portfolio/signup.html', {'form': form})
+            return render(request, 'portfolio/newuser.html', {'form': form})
     else:
         form = SignUpForm()
-        return render(request, 'portfolio/signup.html', {'form': form})
+        return render(request, 'portfolio/newuser.html', {'form': form})
 
 
 
